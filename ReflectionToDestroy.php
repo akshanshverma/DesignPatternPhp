@@ -21,7 +21,7 @@ class A
         echo $str . "\n";
     }
 }
-
+/*
 class B
 {
 
@@ -53,18 +53,27 @@ class B
         return unserialize($serealized);
     }
 }
+*/
 
-
-// function main()
-// {
-//     $ref = new ReflectionClass("A");
-
-//     print_r($ref->newInstance());
-// }
+function main()
+{
+    $obj1 = A::getInstance();
+    $obj1->check("verma");
+    echo "1st obj address: ".spl_object_hash($obj1)."\n";
+    
+    $ref = new ReflectionClass("A");
+    $cons = $ref->getConstructor();
+    $cons->setAccessible(true);
+    $obj = $ref->newInstanceWithoutConstructor();
+    $cons->invoke($obj, 0);
+    $obj->check("akku");
+    echo "2nd obj address: ".spl_object_hash($obj)."\n";
+    
+}
 // $instance1 = A::getInstance();
 // print_r($instance1);
 // $instance2 = B::createInstanceWithoutConstructor("A");
 // print_r($instance2);
 
-
+main();
 ?>
